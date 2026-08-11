@@ -13,7 +13,7 @@ import { RequireAuth } from "./RequireAuth";
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter basename="/app">
+      <BrowserRouter>
         <Routes>
           <Route path="/login" element={<AuthPage mode="login" />} />
           <Route path="/register" element={<AuthPage mode="register" />} />
