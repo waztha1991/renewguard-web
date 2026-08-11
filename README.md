@@ -1,5 +1,7 @@
 # RenewGuard Web (Agent Portal)
 
+> **Note:** currently configured to deploy as `renewguard-web-dev` on the free `*.workers.dev` subdomain, separate from any existing production deployment.
+
 React + Vite agent portal, split out from the main RenewGuard monorepo for
 independent deployment. Talks to the `renewguard-backend` API.
 

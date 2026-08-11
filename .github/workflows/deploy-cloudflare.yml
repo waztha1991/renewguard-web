@@ -1,4 +1,4 @@
-name: Deploy Agent Web Portal to Cloudflare
+name: Deploy Agent Web Portal to Cloudflare (dev)
 
 on:
   push:

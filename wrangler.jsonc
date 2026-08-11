@@ -1,5 +1,5 @@
 {
-  "name": "renewguard-web",
+  "name": "renewguard-web-dev",
   "compatibility_date": "2026-06-01",
   "assets": {
     "directory": "./dist",
