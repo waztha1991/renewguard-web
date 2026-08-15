@@ -58,6 +58,7 @@ async function request<T>(path: string, opts: RequestOpts = {}): Promise<T> {
 
 import type {
   AgentMe,
+  Announcement,
   LicenseStatus,
   Policy,
   ReminderLog,
@@ -105,6 +106,7 @@ export const api = {
   logReminder: (log: ReminderLog) =>
     request<ReminderLog>("/reminder-logs", { method: "POST", body: log }),
   reports: () => request<ReportsResponse>("/reports"),
+  announcements: () => request<Announcement[]>("/announcements"),
   upload: (file: File) => {
     const fd = new FormData();
     fd.append("file", file);

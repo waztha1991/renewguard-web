@@ -1,9 +1,43 @@
+import { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth";
+import { api } from "../api";
+import type { Announcement } from "../types";
+
+const DISMISSED_KEY = "renewguard.dismissedAnnouncements";
+
+function loadDismissed(): string[] {
+  try {
+    return JSON.parse(localStorage.getItem(DISMISSED_KEY) || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function saveDismissed(ids: string[]) {
+  localStorage.setItem(DISMISSED_KEY, JSON.stringify(ids));
+}
 
 export function AppShell() {
   const { me, logout } = useAuth();
   const navigate = useNavigate();
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [dismissed, setDismissed] = useState<string[]>(loadDismissed());
+
+  useEffect(() => {
+    api
+      .announcements()
+      .then(setAnnouncements)
+      .catch(() => setAnnouncements([]));
+  }, []);
+
+  function dismiss(id: string) {
+    const next = [...dismissed, id];
+    setDismissed(next);
+    saveDismissed(next);
+  }
+
+  const visibleAnnouncements = announcements.filter((a) => !dismissed.includes(a.id));
 
   const banner =
     me?.onTrial ? (
@@ -61,6 +95,19 @@ export function AppShell() {
           </button>
         </nav>
       </div>
+      {visibleAnnouncements.map((a) => (
+        <div key={a.id} className={`banner announcement ${a.type}`}>
+          <span>{a.message}</span>
+          <button
+            type="button"
+            className="announcement-dismiss"
+            aria-label="Dismiss"
+            onClick={() => dismiss(a.id)}
+          >
+            ×
+          </button>
+        </div>
+      ))}
       {banner}
       <Outlet />
     </div>

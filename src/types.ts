@@ -128,3 +128,12 @@ export const POLICY_STATUSES = [
   "EXPIRED",
   "RENEWED",
 ] as const;
+
+export interface Announcement {
+  id: string;
+  message: string;
+  type: "info" | "warning" | "maintenance";
+  active: boolean;
+  createdAt: number;
+  expiresAt: number | null;
+}
